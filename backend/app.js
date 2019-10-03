@@ -1,16 +1,39 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const bodyParser = require('body-parser');
 const createError = require('http-errors');
+//Import the mongoose module
+const mongoose = require('mongoose');
+
 require('dotenv').config();
+
+//Mongo connect
+
+//Set up default mongoose connection
+const mongoDB = 'mongodb://shopped:shopped@127.0.0.1/shopped';
+mongoose.connect(mongoDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+// Get Mongoose to use the global promise library
+mongoose.Promise = global.Promise;
+//Get the default connection
+const db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 
 const indexRouter = require('./routes/index');
 
 const app = express();
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 app.use(cookieParser());
 
 app.use('/', indexRouter);
@@ -28,7 +51,6 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
 });
 
 module.exports = app;
