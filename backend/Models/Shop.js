@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+/**
+ * Shop model
+ * @type {Model}
+ */
 const Shop = mongoose.model(
     'Shop',
     new mongoose.Schema({

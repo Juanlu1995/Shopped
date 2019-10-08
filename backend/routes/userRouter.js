@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../Controllers/index');
 
+/**
+ * Get request /user
+ */
 router.get('/', function (req, res, next) {
     controller.user.getAll()
         .then(shops => {
@@ -12,6 +15,9 @@ router.get('/', function (req, res, next) {
     );
 });
 
+/**
+ * Post request /shop
+ */
 router.post('/', function (req, res) {
     controller.user.createUser(req)
         .then(users => {
