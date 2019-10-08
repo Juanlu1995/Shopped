@@ -35,6 +35,10 @@ const getAll = (req) => {
         });
 };
 
+/**
+ * All controller for User
+ * @type {{getAll: *, createUser: *}}
+ */
 const UserController = {
     createUser,
     getAll

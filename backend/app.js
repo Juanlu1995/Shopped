@@ -31,7 +31,7 @@ const app = express();
 
 app.use(logger('dev'));
 
-app.use(bodyParser.json()); // support json encoded bodies
+app.use(express.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(cookieParser());
