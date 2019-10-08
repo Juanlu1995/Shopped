@@ -1,5 +1,10 @@
-const User = require("../Models/User");
+const {User} = require("../Models/User");
 
+/**
+ * Insert a User and return all users
+ * @param req request
+ * @returns {Promise<User>}
+ */
 const createUser = (req) => {
     const user = new User({
         name: req.body.name,
@@ -7,18 +12,27 @@ const createUser = (req) => {
         phone: req.body.phone,
         address: req.body.address,
     });
-    user.save((err) => {
-        if (err) {
-            return handleError(err);
-        }
-    });
-    res.send(getAll());
+    return user.save()
+        .then(() => {
+            return getAll();
+        })
+        .catch((err) => {
+            console.error(err);
+        });
 };
 
+/**
+ * Get all Users
+ * @returns {Promise<User>}
+ */
 const getAll = (req) => {
-    User.find({}, function (err, shops) {
-        console.log(shops);
-    });
+    return User.find({})
+        .then((users) => {
+            return users
+        })
+        .catch((err) => {
+            console.error(err)
+        });
 };
 
 const UserController = {
