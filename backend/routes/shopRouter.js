@@ -1,15 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const controller = require( '../Controllers/index');
+const controller = require('../Controllers/index');
 
+/**
+ * Get request /shop
+ */
 router.get('/', function (req, res, next) {
-    res.send("shop");
+    controller.shop.getAll()
+        .then(shops => {
+                res.json(shops)
+            }
+        ).catch(err => {
+            console.error(err);
+        }
+    )
 });
 
+/**
+ * Post request
+ */
 router.post('/', function (req, res) {
-    const shops = controller.shop.createShop(req);
-
-    res.toJson(shops);
+    controller.shop.createShop(req)
+        .then((shops) => {
+            res.json(shops);
+        })
 });
 
 module.exports = router;
