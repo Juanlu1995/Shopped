@@ -29,12 +29,33 @@ UserSchema.statics.findByEmail = async function (email) {
  * @param ids [String] with his ids
  * @returns {Promise<*>}
  */
-UserSchema.statics.findById = async function (ids) {
+UserSchema.statics.findByIds = async function (ids) {
     return await User.find({
         '_id': {
             $in: ids.map(id => mongoose.Types.ObjectId(id))
         }
     })
+};
+
+/**
+ * Get all Users
+ * @returns {[User]}
+ */
+UserSchema.statics.getAll = async function() {
+    try {
+        return await User.find({})
+            .then((users) => {
+                return users
+            })
+            .catch((err) => {
+                console.error(err);
+                return null
+            });
+    }catch (e) {
+        console.error(e);
+        return null;
+    }
+
 };
 
 /**

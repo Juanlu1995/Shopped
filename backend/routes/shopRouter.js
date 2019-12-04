@@ -6,7 +6,7 @@ const controller = require('../Controllers/index');
  * Get request /shop
  */
 router.get('/', function (req, res, next) {
-    controller.shop.getAll()
+    controller.shop.index()
         .then(shops => {
                 res.json(shops)
             }

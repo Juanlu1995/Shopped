@@ -11,7 +11,7 @@ require('dotenv').config();
 //Mongo connect
 
 //Set up default mongoose connection
-const mongoDB = 'mongodb://shopped:shopped@127.0.0.1/shopped';
+const mongoDB = `mongodb://shopped:shopped@${process.env.MONGO_HOST}/shopped`;
 mongoose.connect(mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
