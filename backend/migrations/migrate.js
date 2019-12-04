@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 
 
 const usersMigrate = require('./users-migrate');
+const shopsMigrate = require('./shops-migrate');
+const notPayMigrate = require('./notPay-migrate');
 
 //Mongo connect
 
 //Set up default mongoose connection
 //TODO: make connection with .env
-const mongoDB = 'mongodb://shopped:shopped@127.0.0.1/shopped';
+const mongoDB = `mongodb://shopped:shopped@${process.env.MONGO_HOST}/shopped`;
 mongoose.connect(mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -24,7 +26,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const migrations = [
     usersMigrate,
+    // shopsMigrate,
+    // notPayMigrate
 ];
 
 
-migrations.forEach(m => m.startMigration());
+migrations.forEach(async m => await m.startMigration());

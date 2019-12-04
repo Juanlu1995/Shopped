@@ -1,4 +1,4 @@
-const {User} = require("../Models/User");
+const User = require("../Models/User");
 
 /**
  * Insert a User and return all users
@@ -14,25 +14,20 @@ const createUser = (req) => {
     });
     return user.save()
         .then(() => {
-            return getAll();
+            return User.getAll();
         })
         .catch((err) => {
             console.error(err);
         });
 };
 
-/**
- * Get all Users
- * @returns {Promise<User>}
- */
-const getAll = (req) => {
-    return User.find({})
-        .then((users) => {
-            return users
-        })
-        .catch((err) => {
-            console.error(err)
-        });
+const index = async () => {
+    try {
+        return await User.getAll();
+    } catch (e) {
+        console.log(e);
+        return null
+    }
 };
 
 /**
@@ -41,7 +36,7 @@ const getAll = (req) => {
  */
 const UserController = {
     createUser,
-    getAll
+    index
 };
 
 module.exports = UserController;

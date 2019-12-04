@@ -1,4 +1,3 @@
-# Use root/example as user/password credentials
 version: '3.1'
 
 services:
@@ -17,7 +16,9 @@ services:
     volumes:
       - ./docker/mongo/data:/data/db
       - ./docker/mongo/init.d:/docker-entrypoint-initdb.d
-
+    networks:
+      shopped:
+        ipv4_address: 172.168.8.4
 
   mongo-express:
     image: mongo-express
@@ -27,3 +28,52 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: shopped
+    networks:
+      shopped:
+        ipv4_address: 172.168.8.5
+
+  backend:
+    image: node:12.13.1
+    restart: always
+    container_name: backend
+    expose:
+      - 3005
+    environment:
+      PORT: 3005
+      env: development
+      MONGO_HOST: mongo
+    depends_on:
+      - mongo
+    user: node
+    volumes:
+      - ./backend:/home/node/app
+    working_dir: /home/node/app
+    networks:
+      shopped:
+        ipv4_address: 172.168.8.11
+
+  frotend:
+    image: node:12.13.1
+    restart: always
+    container_name: frotend
+    expose:
+      - 3000
+    environment:
+      PORT: 3000
+      env: development
+    depends_on:
+      - backend
+    user: node
+    volumes:
+      - ./frontend:/home/node/app
+    working_dir: /home/node/app
+    networks:
+      shopped:
+        ipv4_address: 172.168.8.12
+
+networks:
+  shopped:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.168.8.0/24

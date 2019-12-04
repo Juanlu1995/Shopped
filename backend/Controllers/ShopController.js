@@ -1,4 +1,4 @@
-const {Shop} = require("../Models/Shop");
+const Shop = require("../Models/Shop");
 const User = require("../Models/User");
 
 /**
@@ -24,7 +24,7 @@ const createShop = async (req) => {
      * Get the employees
      * @type {[User] || Error}
      */
-    const employees = await User.findById(req.body.employees)
+    const employees = await User.findByIds(req.body.employees)
         .then(emp => {
             return emp
         }).catch(err => {
@@ -45,26 +45,16 @@ const createShop = async (req) => {
      */
     return shop.save()
         .then(() => {
-            return getAll();
+            return Shop.getAll();
         }).catch(err => {
             console.error(err)
         })
 };
 
-/**
- * Get all Shops
- * @returns {Promise<Shop>}
- */
-const getAll = () => {
-    return Shop
-        .find({})
-        .then((shops) => {
-            return shops
-        })
-        .catch((err) => {
-            console.error(err)
-        });
+const index = async () => {
+    return await Shop.getAll()
 };
+
 
 /**
  * All controller for Shop
@@ -72,7 +62,7 @@ const getAll = () => {
  */
 const ShopController = {
     createShop,
-    getAll
+    index
 };
 
 module.exports = ShopController;
