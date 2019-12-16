@@ -34,7 +34,6 @@ services:
 
   backend:
     image: node:12.13.1
-    restart: always
     container_name: backend
     expose:
       - 3005
@@ -48,25 +47,27 @@ services:
     volumes:
       - ./backend:/home/node/app
     working_dir: /home/node/app
+    command: npm start
     networks:
       shopped:
         ipv4_address: 172.168.8.11
 
-  frotend:
+  frontend:
     image: node:12.13.1
-    restart: always
     container_name: frotend
     expose:
       - 3000
     environment:
       PORT: 3000
       env: development
+      BACKEND_URL: backend
     depends_on:
       - backend
     user: node
     volumes:
       - ./frontend:/home/node/app
     working_dir: /home/node/app
+    command: npm start
     networks:
       shopped:
         ipv4_address: 172.168.8.12

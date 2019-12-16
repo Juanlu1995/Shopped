@@ -1,0 +1,1 @@
+export const TOKEN_NAME = 'id_token';
