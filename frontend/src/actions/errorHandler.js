@@ -7,7 +7,7 @@ import {
     SERVER_ERROR,
     TIMEOUT_ERROR,
     UNAUTHORIZED_ERROR
-} from "../constant/messages";
+} from "../constants/messages";
 
 
 export function errorHandler(error) {

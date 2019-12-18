@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {TOKEN_NAME} from '../constant';
+import {TOKEN_NAME, BASE_URL} from '../constants';
 
-axios.create({
-    baseURL: process.env.BACKEND_URL,
+export default axios.create({
+    baseURL: BASE_URL,
     headers: {
         Authorization: `Baerer ${localStorage.getItem(TOKEN_NAME)}`
     }

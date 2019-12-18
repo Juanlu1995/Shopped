@@ -1,20 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
 import App from './App';
-import configureStore from './configureStore';
+import {NODE_ENV} from './constants'
 
-const store = configureStore();
+console.log(NODE_ENV);
 
-const renderApp = () =>
-    render(
-        <Provider store={store}>
-            <App />
-        </Provider>,
-        document.getElementById('root')
-    );
+const renderApp = () => render(<App />,document.getElementById('root'));
 
-if (process.env.NODE_ENV !== 'production' && module.hot) {
+if (NODE_ENV !== 'production' && module.hot) {
     module.hot.accept('./App', renderApp)
 }
 

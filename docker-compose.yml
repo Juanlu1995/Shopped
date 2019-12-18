@@ -60,8 +60,10 @@ services:
     environment:
       PORT: 3000
       env: development
-      BACKEND_URL: backend
+      NODE_ENV: development
     depends_on:
+      - backend
+    links:
       - backend
     user: node
     volumes:

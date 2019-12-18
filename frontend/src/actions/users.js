@@ -6,21 +6,20 @@ const getAllUsers = (
     data,
     done = () => {
     }
-) => {
-    return (dispatch) => {
-        axios.get('/users')
-            .then((response) => {
-                dispatch({
-                    type: GET_ALL_USERS,
-                    payload: {
-                        users: response.data
-                    }
-                });
-                done(response.data)
-            }).catch(error => {
-            errorHandler(error);
-        })
-    }
+) => (dispatch) => {
+    axios.get('/user')
+        .then((response) => {
+            dispatch({
+                type: GET_ALL_USERS,
+                payload: {
+                    users: response.data
+                }
+            });
+            done(response.data)
+        }).catch(error => {
+        errorHandler(error);
+        done(null, error);
+    })
 };
 
-export { getAllUsers };
+export {getAllUsers};
