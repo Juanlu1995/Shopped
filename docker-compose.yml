@@ -47,15 +47,17 @@ services:
     user: node
     volumes:
       - ./backend:/home/node/app
+      - ./docker/node/entry-point.sh:/tmp/entry-point.sh
     working_dir: /home/node/app
+    entrypoint: /tmp/entry-point.sh
     networks:
       shopped:
         ipv4_address: 172.168.8.11
 
-  frotend:
+  frontend:
     image: node:12.13.1
     restart: always
-    container_name: frotend
+    container_name: frontend
     expose:
       - 3000
     environment:
@@ -66,7 +68,9 @@ services:
     user: node
     volumes:
       - ./frontend:/home/node/app
+      - ./docker/node/entry-point.sh:/tmp/entry-point.sh
     working_dir: /home/node/app
+    entrypoint: /tmp/entry-point.sh
     networks:
       shopped:
         ipv4_address: 172.168.8.12
